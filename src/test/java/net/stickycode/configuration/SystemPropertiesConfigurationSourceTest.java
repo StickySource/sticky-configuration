@@ -21,14 +21,20 @@ public class SystemPropertiesConfigurationSourceTest {
 
   @Test
   public void has() {
-    assertThat(source().hasValue("java.home")).isTrue();
-    assertThat(source().hasValue("user.dir")).isTrue();
-    assertThat(source().hasValue("no.such.property")).isFalse();
+    assertThat(apply("java.home").hasValue()).isTrue();
+    assertThat(apply("user.dir").hasValue()).isTrue();
+    assertThat(apply("no.such.property").hasValue()).isFalse();
+  }
+
+  private LookupValues apply(String key) {
+    LookupValues values = new LookupValues();
+    source().apply(new PlainConfigurationKey(key), values);
+    return values;
   }
 
   @Test
   public void get() {
-    assertThat(source().getValue("java.home")).isNotNull();
+    assertThat(apply("java.home").getValue()).isNotNull();
   }
 
   private SystemPropertiesConfigurationSource source() {

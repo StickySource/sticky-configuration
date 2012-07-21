@@ -5,7 +5,7 @@ import net.stickycode.configuration.LookupValues;
 public class FoundPlaceholder
     implements Placeholder {
 
-  private LookupValues value;
+  private String value;
 
   private int start;
 
@@ -21,8 +21,8 @@ public class FoundPlaceholder
    * */
   private int endAfterReplacement;
 
-  public FoundPlaceholder(LookupValues value, int indexOfStart, int indexOfClose) {
-    this.value = value;
+  public FoundPlaceholder(String value2, int indexOfStart, int indexOfClose) {
+    this.value = value2;
     this.start = indexOfStart;
     this.end = indexOfClose;
   }
@@ -38,7 +38,7 @@ public class FoundPlaceholder
   }
 
   @Override
-  public LookupValues replace(LookupValues lookup) {
+  public String replace(String lookup) {
     if (end == value.length())
       return lookup;
 

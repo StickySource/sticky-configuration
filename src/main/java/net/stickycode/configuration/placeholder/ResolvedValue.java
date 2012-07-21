@@ -2,15 +2,15 @@ package net.stickycode.configuration.placeholder;
 
 import net.stickycode.configuration.ConfigurationKey;
 import net.stickycode.configuration.ConfigurationValues;
-import net.stickycode.configuration.LookupValues;
+import net.stickycode.configuration.Value;
 
-public class ResolvedValue {
+public class ResolvedValue implements ConfigurationValues {
 
   private final ConfigurationKey key;
 
   private final ConfigurationValues seed;
 
-  private LookupValues value;
+  private String value;
 
   public ResolvedValue(ConfigurationKey key, ConfigurationValues seed) {
     super();
@@ -23,7 +23,7 @@ public class ResolvedValue {
   }
 
   public String getValue() {
-    return value.getValue();
+    return value;
   }
 
   @Override
@@ -37,9 +37,18 @@ public class ResolvedValue {
     return seed + "->" + value;
   }
 
-  public ResolvedValue withValue(LookupValues value) {
+  public ResolvedValue withValue(String value) {
     this.value = value;
     return this;
+  }
+
+  @Override
+  public void add(Value value) {
+  }
+
+  @Override
+  public boolean hasValue() {
+    return isResolved();
   }
 
 }

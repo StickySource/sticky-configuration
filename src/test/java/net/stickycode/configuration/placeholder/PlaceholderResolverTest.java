@@ -1,8 +1,10 @@
-package net.stickycode.configured.placeholder;
+package net.stickycode.configuration.placeholder;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import net.stickycode.configured.ConfigurationManifest;
+import net.stickycode.configuration.ApplicationValue;
+import net.stickycode.configuration.LookupValues;
+import net.stickycode.configuration.PlainConfigurationKey;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +16,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class PlaceholderResolverTest {
 
   @Mock
-  ConfigurationManifest manifest;
+  ConfigurationLookup manifest;
 
   @Before
   public void before() {
-    when(manifest.lookupValue("key")).thenReturn("value");
+    LookupValues values = new LookupValues();
+    values.add(new ApplicationValue("value"));
+    when(manifest.lookupValue("key")).thenReturn(values);
   }
 
   @Test
@@ -63,8 +67,8 @@ public class PlaceholderResolverTest {
 
   @Test
   public void nestedPlaceholders() {
-    when(manifest.lookupValue("nested")).thenReturn("key");
-    when(manifest.lookupValue("keykey")).thenReturn("value");
+    when(manifest.lookupValue("nested")).thenReturn(new LookupValues().with(new ApplicationValue("key")));
+    when(manifest.lookupValue("keykey")).thenReturn(new LookupValues().with(new ApplicationValue("value")));
 
     assertThat(resolve("${${nested}}")).isEqualTo("value");
     assertThat(resolve("${${nested}${nested}}")).isEqualTo("value");
@@ -72,32 +76,34 @@ public class PlaceholderResolverTest {
 
   @Test(expected = KeyAlreadySeenDuringPlaceholderResolutionException.class)
   public void nestedPlaceholdersWithCycle() {
-    when(manifest.lookupValue("loop")).thenReturn("${loop}");
+    when(manifest.lookupValue("loop")).thenReturn(new LookupValues().with(new ApplicationValue("${loop}")));
     resolve("${${loop}}");
   }
 
   @Test(expected = KeyAlreadySeenDuringPlaceholderResolutionException.class)
   public void nestedPlaceholdersWithDeepCycle() {
-    when(manifest.lookupValue("loop")).thenReturn("${loop}");
-    when(manifest.lookupValue("deeploop")).thenReturn("${loop}");
+    when(manifest.lookupValue("loop")).thenReturn(new LookupValues().with(new ApplicationValue("${loop}")));
+    when(manifest.lookupValue("deeploop")).thenReturn(new LookupValues().with(new ApplicationValue("${loop}")));
     resolve("${deeploop}");
   }
 
   @Test(expected = KeyAlreadySeenDuringPlaceholderResolutionException.class, timeout = 100)
   public void nestedPlaceholdersWithOffsetLoop() {
-    when(manifest.lookupValue("offsetloop")).thenReturn(" ${offsetloop}");
+    when(manifest.lookupValue("offsetloop")).thenReturn(new LookupValues().with(new ApplicationValue(" ${offsetloop}")));
     resolve("${offsetloop}");
   }
 
   @Test
   public void nestedPlaceholdersWithCycle2() {
-    when(manifest.lookupValue("cycle")).thenReturn("cycle");
+    when(manifest.lookupValue("cycle")).thenReturn(new LookupValues().with(new ApplicationValue("cycle")));
     assertThat(resolve("${cycle}")).isEqualTo("cycle");
     assertThat(resolve("${${cycle}}")).isEqualTo("cycle");
   }
 
   private String resolve(String string) {
-    return new PlaceholderResolver(manifest).resolve(string, new ResolvedValue(null, null, "key", string)).getValue();
+    LookupValues lookup = new LookupValues().with(new ApplicationValue(string));
+    ResolvedValue resolution = new ResolvedValue(new PlainConfigurationKey("key"), lookup);
+    return new PlaceholderResolver(manifest).resolve(lookup, resolution).getValue();
   }
 
 }

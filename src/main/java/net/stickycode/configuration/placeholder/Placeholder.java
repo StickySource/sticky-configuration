@@ -12,7 +12,7 @@ public interface Placeholder {
   
   int getEnd();
 
-  String replace(LookupValues lookup);
+  String replace(String lookup);
 
   boolean contains(Placeholder placeholder);
 

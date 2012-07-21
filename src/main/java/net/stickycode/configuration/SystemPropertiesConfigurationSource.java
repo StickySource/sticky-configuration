@@ -15,19 +15,20 @@ package net.stickycode.configuration;
 import net.stickycode.stereotype.StickyComponent;
 
 @StickyComponent
-public class SystemPropertiesConfigurationSource {
-
-  public boolean hasValue(String key) {
-    return System.getProperty(key) != null;
-  }
-
-  public String getValue(String key) {
-    return System.getProperty(key);
-  }
+public class SystemPropertiesConfigurationSource
+    implements ConfigurationSource {
 
   @Override
   public String toString() {
     return getClass().getSimpleName();
+  }
+
+  @Override
+  public void apply(ConfigurationKey key, ConfigurationValues values) {
+    String k = key.join(".");
+    String value = System.getProperty(k);
+    if (value != null)
+      values.add(new SystemValue(value));
   }
 
 }

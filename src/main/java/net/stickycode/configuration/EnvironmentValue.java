@@ -13,5 +13,10 @@ public class EnvironmentValue
   public String get() {
     return value;
   }
+  
+  @Override
+  public boolean hasPrecedence(Value v) {
+    return false;
+  }
 
 }

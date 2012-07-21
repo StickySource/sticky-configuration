@@ -1,4 +1,4 @@
-package net.stickycode.configured.placeholder;
+package net.stickycode.configuration.placeholder;
 
 import static org.fest.assertions.Assertions.assertThat;
 import net.stickycode.configuration.LookupValues;
@@ -9,7 +9,7 @@ public class PlaceholderTest {
 
   @Test
   public void foundPlaceHolderKey() {
-    LookupValues value = new LookupValues("abc${key}hij");
+    String value = "abc${key}hij";
     assertThat(value.indexOf("}")).isEqualTo(8);
     assertThat(value.lastIndexOf("${", 8)).isEqualTo(3);
     assertThat(new FoundPlaceholder(value, 3, 8).getKey()).isEqualTo("key");

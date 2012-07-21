@@ -46,5 +46,11 @@
 			<version>1.7</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.stickycode.composite</groupId>
+			<artifactId>sticky-composite-logging-deploy</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

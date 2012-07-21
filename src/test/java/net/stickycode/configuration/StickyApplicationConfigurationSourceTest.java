@@ -58,14 +58,26 @@ public class StickyApplicationConfigurationSourceTest {
 
   @Test
   public void hasValueLookupsAreCorrect() {
-    assertThat(source().hasValue("application.name")).isTrue();
-    assertThat(source().hasValue("no.such.property")).isFalse();
+    assertThat(apply(key("no.such.property")).hasValue()).isFalse();
   }
 
   @Test
   public void getValuesFromSourceWorks() {
-    assertThat(source().hasValue("application.name")).isTrue();
-    assertThat(source().getValue("application.name")).isEqualTo("sticky");
+    assertThat(apply(key("application.name")).getValue()).isEqualTo("sticky");
+  }
+
+  private ConfigurationKey key(String key) {
+    return new PlainConfigurationKey(key);
+  }
+
+  private ConfigurationKey key(String... key) {
+    return new CompoundConfigurationKey(key);
+  }
+
+  private ConfigurationValues apply(ConfigurationKey key) {
+    LookupValues values = new LookupValues();
+    source().apply(key, values);
+    return values;
   }
 
   private StickyApplicationConfigurationSource source() {

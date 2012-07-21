@@ -21,15 +21,15 @@ public class PlaceholderResolver {
 
     Placeholder placeholder = find(seed.getValue());
     if (placeholder.notFound())
-      return resolution.withValue(seed);
-.
+      return resolution.withValue(seed.getValue());
+
     LookupValues lookup = manifest.lookupValue(placeholder.getKey());
     if (lookup == null)
       throw new UnresolvedPlaceholderException(seed, placeholder);
 
     ArrayDeque<Placeholder> seen = new ArrayDeque<Placeholder>();
     seen.push(placeholder);
-    return resolve(placeholder.replace(lookup), resolution, seen);
+    return resolve(placeholder.replace(lookup.getValue()), resolution, seen);
   }
 
   ResolvedValue resolve(String value, ResolvedValue resolution, Deque<Placeholder> seen) {
@@ -45,10 +45,10 @@ public class PlaceholderResolver {
         throw new KeyAlreadySeenDuringPlaceholderResolutionException(placeholder, resolution);
     }
 
-    String lookup = manifest.lookupValue(placeholder.getKey());
+    LookupValues lookup = manifest.lookupValue(placeholder.getKey());
 
     seen.push(placeholder);
-    ResolvedValue resolve = resolve(placeholder.replace(lookup), resolution, seen);
+    ResolvedValue resolve = resolve(placeholder.replace(lookup.getValue()), resolution, seen);
     seen.pop();
     return resolve;
   }

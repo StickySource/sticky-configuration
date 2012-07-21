@@ -108,7 +108,7 @@ public class StickyApplicationConfigurationSource
     String lookup = key.join(".");
     String value = map.get(lookup);
     if (value != null)
-      values.add(new ImmutableValue(value));
+      values.add(new ApplicationValue(value));
     
   }
 

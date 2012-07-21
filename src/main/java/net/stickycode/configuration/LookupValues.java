@@ -1,44 +1,46 @@
 package net.stickycode.configuration;
 
-public class LookupValues
-    implements ConfigurationValues, CharSequence {
+import java.util.LinkedList;
+import java.util.ListIterator;
 
-  private String value;
+public class LookupValues
+    implements ConfigurationValues {
+
+  private LinkedList<Value> values = new LinkedList<Value>();
 
   @Override
   public String getValue() {
-    return value;
+    return values.getFirst().get();
   }
 
   public boolean isEmpty() {
     return false;
   }
 
-  @Override
-  public int length() {
-    return value.length();
-  }
-
-  @Override
-  public char charAt(int index) {
-    return value.charAt(index);
-  }
-
-  @Override
-  public CharSequence subSequence(int start, int end) {
-    return value.subSequence(start, end);
-  }
-
-  @Override
   public void add(Value value) {
-    // FIXME
-    this.value = value.get();
+    ListIterator<Value> i = values.listIterator();
+    while (i.hasNext()) {
+      Value v = i.next();
+      if (value.hasPrecedence(v)) {
+        i.set(value);
+        i.add(v);
+        return;
+      }
+    }
+
+    i.add(value);
   }
 
   @Override
   public boolean hasValue() {
-    // FIXME
-    return value != null;
+    return !values.isEmpty();
+  }
+
+  public LookupValues with(Value... applicationValue) {
+    for (Value value : applicationValue) {
+      add(value);
+    }
+    return this;
   }
 
 }
