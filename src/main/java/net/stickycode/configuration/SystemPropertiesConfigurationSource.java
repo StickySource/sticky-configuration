@@ -24,7 +24,7 @@ public class SystemPropertiesConfigurationSource
   }
 
   @Override
-  public void apply(ConfigurationKey key, ConfigurationValues values) {
+  public void apply(ConfigurationKey key, ResolvedConfiguration values) {
     String k = key.join(".");
     String value = System.getProperty(k);
     if (value != null)

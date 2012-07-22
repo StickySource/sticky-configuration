@@ -5,13 +5,13 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import net.stickycode.coercion.Coercion;
 import net.stickycode.configuration.placeholder.ConfigurationLookup;
 import net.stickycode.configuration.placeholder.PlaceholderResolver;
 import net.stickycode.configuration.placeholder.ResolvedValue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 public class StickyConfiguration
     implements ConfigurationResolver, ConfigurationLookup {
@@ -31,17 +31,12 @@ public class StickyConfiguration
       log.debug("No environment is specified for resolving configuration");
   }
 
-  public ConfigurationResolutions resolve(Iterable<ConfigurationKey> configurations) {
-    StickyConfigurationResolutions resolutions = new StickyConfigurationResolutions();
+  public void resolve(ConfigurationTarget configuration) {
     PlaceholderResolver resolver = new PlaceholderResolver(this);
-    for (ConfigurationKey key : configurations) {
-        LookupValues seed = lookupValue(key);
-        log.debug("resolving key '{}' with seed '{}'", key, seed);
-        resolutions.put(key, resolver.resolve(seed, new ResolvedValue(key, seed)));
-      }
-
-    log.debug("resolutions {}", resolutions);
-    return resolutions;
+    LookupValues seed = lookupValue(configuration);
+    log.debug("resolving key '{}' with seed '{}'", configuration, seed);
+    ResolvedValue resolved = resolver.resolve(seed, new ResolvedValue(configuration, seed));
+    configuration.resolvedWith(resolved);
   }
 
   /**
@@ -53,7 +48,7 @@ public class StickyConfiguration
 
   LookupValues findValueInSources(ConfigurationKey key) {
     LookupValues values = new LookupValues();
-    
+
     if (environment != null)
       applySources(new EnvironmentConfigurationKey(environment, key), values);
 

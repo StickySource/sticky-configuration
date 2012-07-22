@@ -1,7 +1,7 @@
 package net.stickycode.configuration;
 
 public class EnvironmentValue
-    implements Value {
+    implements ConfigurationValue {
 
   private String value;
 
@@ -15,7 +15,7 @@ public class EnvironmentValue
   }
   
   @Override
-  public boolean hasPrecedence(Value v) {
+  public boolean hasPrecedence(ConfigurationValue v) {
     return false;
   }
 

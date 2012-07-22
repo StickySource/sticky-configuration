@@ -101,7 +101,7 @@ public class StickyApplicationConfigurationSource
   }
 
   @Override
-  public void apply(ConfigurationKey key, ConfigurationValues values) {
+  public void apply(ConfigurationKey key, ResolvedConfiguration values) {
     if (map == null)
       return;
     

@@ -1,18 +1,18 @@
 package net.stickycode.configuration.placeholder;
 
 import net.stickycode.configuration.ConfigurationKey;
-import net.stickycode.configuration.ConfigurationValues;
-import net.stickycode.configuration.Value;
+import net.stickycode.configuration.ResolvedConfiguration;
+import net.stickycode.configuration.ConfigurationValue;
 
-public class ResolvedValue implements ConfigurationValues {
+public class ResolvedValue implements ResolvedConfiguration {
 
   private final ConfigurationKey key;
 
-  private final ConfigurationValues seed;
+  private final ResolvedConfiguration seed;
 
   private String value;
 
-  public ResolvedValue(ConfigurationKey key, ConfigurationValues seed) {
+  public ResolvedValue(ConfigurationKey key, ResolvedConfiguration seed) {
     super();
     this.key = key;
     this.seed = seed;
@@ -43,7 +43,7 @@ public class ResolvedValue implements ConfigurationValues {
   }
 
   @Override
-  public void add(Value value) {
+  public void add(ConfigurationValue value) {
   }
 
   @Override

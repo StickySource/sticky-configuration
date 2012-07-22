@@ -1,7 +1,7 @@
 package net.stickycode.configuration;
 
 public class ApplicationValue
-    implements Value {
+    implements ConfigurationValue {
 
   private String value;
 
@@ -15,7 +15,7 @@ public class ApplicationValue
   }
 
   @Override
-  public boolean hasPrecedence(Value v) {
+  public boolean hasPrecedence(ConfigurationValue v) {
     return true;
   }
 

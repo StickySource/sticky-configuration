@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 public class LookupValues
-    implements ConfigurationValues {
+    implements ResolvedConfiguration {
 
-  private LinkedList<Value> values = new LinkedList<Value>();
+  private LinkedList<ConfigurationValue> values = new LinkedList<ConfigurationValue>();
 
   @Override
   public String getValue() {
@@ -17,10 +17,10 @@ public class LookupValues
     return false;
   }
 
-  public void add(Value value) {
-    ListIterator<Value> i = values.listIterator();
+  public void add(ConfigurationValue value) {
+    ListIterator<ConfigurationValue> i = values.listIterator();
     while (i.hasNext()) {
-      Value v = i.next();
+      ConfigurationValue v = i.next();
       if (value.hasPrecedence(v)) {
         i.set(value);
         i.add(v);
@@ -36,8 +36,8 @@ public class LookupValues
     return !values.isEmpty();
   }
 
-  public LookupValues with(Value... applicationValue) {
-    for (Value value : applicationValue) {
+  public LookupValues with(ConfigurationValue... applicationValue) {
+    for (ConfigurationValue value : applicationValue) {
       add(value);
     }
     return this;

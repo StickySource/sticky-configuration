@@ -74,7 +74,7 @@ public class StickyApplicationConfigurationSourceTest {
     return new CompoundConfigurationKey(key);
   }
 
-  private ConfigurationValues apply(ConfigurationKey key) {
+  private ResolvedConfiguration apply(ConfigurationKey key) {
     LookupValues values = new LookupValues();
     source().apply(key, values);
     return values;

@@ -42,7 +42,7 @@ public class EnvironmentConfigurationSourceTest {
     assertThat(apply(key("Known", "vaLue")).getValue()).isEqualTo("goodstuff");
   }
 
-  private ConfigurationValues apply(ConfigurationKey key) {
+  private ResolvedConfiguration apply(ConfigurationKey key) {
     LookupValues values = new LookupValues();
     source().apply(key, values);
     return values;

@@ -24,7 +24,7 @@ public class EnvironmentConfigurationSource
   }
 
   @Override
-  public void apply(ConfigurationKey key, ConfigurationValues values) {
+  public void apply(ConfigurationKey key, ResolvedConfiguration values) {
     String environmentKey = deriveKey(key);
     String value = lookupValue(environmentKey);
     if (value != null)
