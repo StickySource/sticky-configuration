@@ -12,9 +12,9 @@
  */
 package net.stickycode.configuration;
 
-import net.stickycode.stereotype.StickyComponent;
+import net.stickycode.stereotype.StickyPlugin;
 
-@StickyComponent
+@StickyPlugin
 public class SystemPropertiesConfigurationSource
     implements ConfigurationSource {
 

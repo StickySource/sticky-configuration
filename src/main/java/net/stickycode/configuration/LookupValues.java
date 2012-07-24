@@ -14,7 +14,7 @@ public class LookupValues
   }
 
   public boolean isEmpty() {
-    return false;
+    return values.isEmpty();
   }
 
   public void add(ConfigurationValue value) {
@@ -41,6 +41,11 @@ public class LookupValues
       add(value);
     }
     return this;
+  }
+
+  @Override
+  public String toString() {
+    return values.toString();
   }
 
 }

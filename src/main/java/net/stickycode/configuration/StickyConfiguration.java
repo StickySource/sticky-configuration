@@ -5,14 +5,15 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import net.stickycode.coercion.Coercion;
 import net.stickycode.configuration.placeholder.ConfigurationLookup;
 import net.stickycode.configuration.placeholder.PlaceholderResolver;
 import net.stickycode.configuration.placeholder.ResolvedValue;
+import net.stickycode.stereotype.StickyComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@StickyComponent
 public class StickyConfiguration
     implements ConfigurationResolver, ConfigurationLookup {
 
