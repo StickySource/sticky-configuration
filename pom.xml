@@ -10,7 +10,7 @@
 
 	<groupId>net.stickycode.configuration</groupId>
 	<artifactId>sticky-configuration</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 	<packaging>jar</packaging>
 
 	<name>sticky-configuration-1</name>
@@ -19,9 +19,9 @@
 	<url>http://www.StickyCode.net/configured/sticky-configuration/</url>
 
 	<scm>
-		<connection>scm:svn:http://stickycode.googlecode.com/svn/trunk/net.stickycode.configured/sticky-configuration</connection>
-		<developerConnection>scm:svn:https://stickycode.googlecode.com/svn/trunk/net.stickycode.configured/sticky-configuration</developerConnection>
-		<url>http://code.google.com/p/stickycode/source/browse/#svn/trunk/net.stickycode.configured/sticky-configuration</url>
+		<connection>scm:svn:http://source.stickycode.net/tags/net.stickycode.configuration/sticky-configuration-1.2</connection>
+		<developerConnection>scm:svn:http://source.stickycode.net/tags/net.stickycode.configuration/sticky-configuration-1.2</developerConnection>
+		<url>scm:svn:http://source.stickycode.net/tags/net.stickycode.configuration/sticky-configuration-1.2</url>
 	</scm>
 
 	<dependencies>
@@ -45,7 +45,7 @@
 		<dependency>
 			<groupId>net.stickycode.composite</groupId>
 			<artifactId>sticky-composite-logging-api</artifactId>
-			<version>[1.4,2)</version>
+			<version>[2,3)</version>
 		</dependency>
 	</dependencies>
 </project>
