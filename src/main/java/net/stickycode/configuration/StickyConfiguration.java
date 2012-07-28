@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 @StickyComponent
 public class StickyConfiguration
-    implements ConfigurationResolver, ConfigurationLookup {
+    implements ConfigurationTargetResolver, ConfigurationLookup {
 
   private Logger log = LoggerFactory.getLogger(getClass());
 
