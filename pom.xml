@@ -10,7 +10,7 @@
 
 	<groupId>net.stickycode.configuration</groupId>
 	<artifactId>sticky-configuration</artifactId>
-	<version>1.3-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>sticky-configuration-1</name>
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>net.stickycode.configuration</groupId>
 			<artifactId>sticky-configuration-api</artifactId>
-			<version>[1.3,2)</version>
+			<version>[1.4,2)</version>
 		</dependency>
 		<dependency>
 			<groupId>net.stickycode.stereotype</groupId>
