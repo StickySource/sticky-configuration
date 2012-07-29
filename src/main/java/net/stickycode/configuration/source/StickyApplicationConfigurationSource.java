@@ -10,7 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package net.stickycode.configuration;
+package net.stickycode.configuration.source;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +22,11 @@ import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 
+import net.stickycode.configuration.ApplicationValue;
+import net.stickycode.configuration.ConfigurationKey;
+import net.stickycode.configuration.ConfigurationSource;
+import net.stickycode.configuration.ResolvedConfiguration;
+import net.stickycode.configuration.ThereCanBeOnlyOneApplicationConfigurationException;
 import net.stickycode.stereotype.StickyComponent;
 
 import org.slf4j.Logger;

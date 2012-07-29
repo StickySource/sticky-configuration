@@ -10,9 +10,17 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package net.stickycode.configuration;
+package net.stickycode.configuration.source;
 
 import static org.fest.assertions.Assertions.assertThat;
+
+import net.stickycode.configuration.CompoundConfigurationKey;
+import net.stickycode.configuration.ConfigurationKey;
+import net.stickycode.configuration.ConfigurationSource;
+import net.stickycode.configuration.LookupValues;
+import net.stickycode.configuration.PlainConfigurationKey;
+import net.stickycode.configuration.ResolvedConfiguration;
+import net.stickycode.configuration.source.EnvironmentConfigurationSource;
 
 import org.junit.Test;
 

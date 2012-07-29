@@ -10,12 +10,16 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package net.stickycode.configuration;
+package net.stickycode.configuration.source;
 
+import net.stickycode.configuration.ConfigurationKey;
+import net.stickycode.configuration.ConfigurationSource;
+import net.stickycode.configuration.ResolvedConfiguration;
+import net.stickycode.configuration.SystemValue;
 import net.stickycode.stereotype.StickyPlugin;
 
 @StickyPlugin
-public class EnvironmentConfigurationSource
+public class SystemPropertiesConfigurationSource
     implements ConfigurationSource {
 
   @Override
@@ -25,18 +29,10 @@ public class EnvironmentConfigurationSource
 
   @Override
   public void apply(ConfigurationKey key, ResolvedConfiguration values) {
-    String environmentKey = deriveKey(key);
-    String value = lookupValue(environmentKey);
+    String k = key.join(".");
+    String value = System.getProperty(k);
     if (value != null)
-      values.add(new EnvironmentValue(value));
-  }
-
-  protected String lookupValue(String environmentKey) {
-    return System.getenv(environmentKey);
-  }
-
-  protected String deriveKey(ConfigurationKey key) {
-    return key.join("_").toUpperCase();
+      values.add(new SystemValue(value));
   }
 
 }
