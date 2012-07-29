@@ -1,8 +1,8 @@
 package net.stickycode.configuration.placeholder;
 
 import net.stickycode.configuration.ConfigurationKey;
-import net.stickycode.configuration.ResolvedConfiguration;
 import net.stickycode.configuration.ConfigurationValue;
+import net.stickycode.configuration.ResolvedConfiguration;
 
 public class ResolvedValue implements ResolvedConfiguration {
 

@@ -21,13 +21,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 
-import net.stickycode.configuration.CompoundConfigurationKey;
 import net.stickycode.configuration.ConfigurationKey;
 import net.stickycode.configuration.LookupValues;
 import net.stickycode.configuration.PlainConfigurationKey;
 import net.stickycode.configuration.ResolvedConfiguration;
 import net.stickycode.configuration.ThereCanBeOnlyOneApplicationConfigurationException;
-import net.stickycode.configuration.source.StickyApplicationConfigurationSource;
 
 import org.junit.Test;
 
@@ -76,10 +74,6 @@ public class StickyApplicationConfigurationSourceTest {
 
   private ConfigurationKey key(String key) {
     return new PlainConfigurationKey(key);
-  }
-
-  private ConfigurationKey key(String... key) {
-    return new CompoundConfigurationKey(key);
   }
 
   private ResolvedConfiguration apply(ConfigurationKey key) {

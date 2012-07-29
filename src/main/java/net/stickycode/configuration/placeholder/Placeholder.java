@@ -1,6 +1,5 @@
 package net.stickycode.configuration.placeholder;
 
-import net.stickycode.configuration.LookupValues;
 
 public interface Placeholder {
 

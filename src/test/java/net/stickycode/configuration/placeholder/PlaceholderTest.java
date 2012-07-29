@@ -1,7 +1,6 @@
 package net.stickycode.configuration.placeholder;
 
 import static org.fest.assertions.Assertions.assertThat;
-import net.stickycode.configuration.LookupValues;
 
 import org.junit.Test;
 
