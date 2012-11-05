@@ -14,8 +14,8 @@ package net.stickycode.configuration.source;
 
 import net.stickycode.configuration.ConfigurationKey;
 import net.stickycode.configuration.ConfigurationSource;
-import net.stickycode.configuration.EnvironmentValue;
 import net.stickycode.configuration.ResolvedConfiguration;
+import net.stickycode.configuration.value.EnvironmentValue;
 import net.stickycode.stereotype.StickyPlugin;
 
 @StickyPlugin

@@ -1,4 +1,6 @@
-package net.stickycode.configuration;
+package net.stickycode.configuration.value;
+
+import net.stickycode.configuration.ConfigurationValue;
 
 public class EnvironmentValue
     implements ConfigurationValue {
@@ -13,10 +15,15 @@ public class EnvironmentValue
   public String get() {
     return value;
   }
-  
+
   @Override
   public boolean hasPrecedence(ConfigurationValue v) {
-    return false;
+    return DefaultValue.class.isAssignableFrom(v.getClass());
+  }
+
+  @Override
+  public String toString() {
+    return "Environment{" + value + "}";
   }
 
 }

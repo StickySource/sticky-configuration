@@ -29,21 +29,23 @@ import net.stickycode.configuration.ThereCanBeOnlyOneApplicationConfigurationExc
 
 import org.junit.Test;
 
-public class StickyApplicationConfigurationSourceTest {
+public class DefaultsConfigurationSourceTest {
 
   @Test(expected = ThereCanBeOnlyOneApplicationConfigurationException.class)
   public void thereCanBeOnlyOneConfiguration() {
-    new StickyApplicationConfigurationSource() {
+    new DefaultsConfigurationSource() {
 
       protected ClassLoader getClassLoader() {
         return new ClassLoader() {
 
           @Override
-          protected Enumeration<URL> findResources(String name) throws IOException {
+          protected Enumeration<URL> findResources(String name)
+              throws IOException {
             return Collections.enumeration(Arrays.asList(new URL[] { url(), url() }));
           }
 
-          private URL url() throws MalformedURLException {
+          private URL url()
+              throws MalformedURLException {
             return new URL("http://www.stickycode.net/configured.html");
           }
         };
@@ -53,7 +55,7 @@ public class StickyApplicationConfigurationSourceTest {
 
   @Test
   public void applicationConfigurationNotFoundWarnsOnly() {
-    new StickyApplicationConfigurationSource() {
+    new DefaultsConfigurationSource() {
 
       @Override
       protected String getConfigurationPath() {
@@ -69,7 +71,7 @@ public class StickyApplicationConfigurationSourceTest {
 
   @Test
   public void getValuesFromSourceWorks() {
-    assertThat(apply(key("application.name")).getValue()).isEqualTo("sticky");
+    assertThat(apply(key("application.name")).getValue()).isEqualTo("stickydefault");
   }
 
   private ConfigurationKey key(String key) {
@@ -83,7 +85,7 @@ public class StickyApplicationConfigurationSourceTest {
   }
 
   private AbstractPropertiesConfigurationSource source() {
-    AbstractClasspathConfigurationSource stickyApplicationConfigurationSource = new StickyApplicationConfigurationSource();
+    AbstractClasspathConfigurationSource stickyApplicationConfigurationSource = new DefaultsConfigurationSource();
     stickyApplicationConfigurationSource.loadApplicationConfiguration();
     return stickyApplicationConfigurationSource;
   }

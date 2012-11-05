@@ -2,9 +2,9 @@ package net.stickycode.configuration.placeholder;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import net.stickycode.configuration.ApplicationValue;
 import net.stickycode.configuration.LookupValues;
 import net.stickycode.configuration.PlainConfigurationKey;
+import net.stickycode.configuration.value.ApplicationValue;
 
 import org.junit.Before;
 import org.junit.Test;

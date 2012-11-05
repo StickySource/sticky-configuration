@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010 RedEngine Ltd, http://www.redengine.co.nz. All rights reserved.
+ * Copyright (c) 2012 RedEngine Ltd, http://www.redengine.co.nz. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -12,109 +12,21 @@
  */
 package net.stickycode.configuration.source;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import net.stickycode.configuration.ConfigurationValue;
+import net.stickycode.configuration.value.ApplicationValue;
+import net.stickycode.stereotype.StickyPlugin;
 
-import javax.annotation.PostConstruct;
-
-import net.stickycode.configuration.ApplicationValue;
-import net.stickycode.configuration.ConfigurationKey;
-import net.stickycode.configuration.ConfigurationSource;
-import net.stickycode.configuration.ResolvedConfiguration;
-import net.stickycode.configuration.ThereCanBeOnlyOneApplicationConfigurationException;
-import net.stickycode.stereotype.StickyComponent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-@StickyComponent
+@StickyPlugin
 public class StickyApplicationConfigurationSource
-    implements ConfigurationSource {
+    extends AbstractClasspathConfigurationSource {
 
-  private Logger log = LoggerFactory.getLogger(getClass());
-
-  private Map<String, String> map;
-
-  public boolean hasValue(String key) {
-    return map.containsKey(key);
-  }
-
-  public String getValue(String key) {
-    return map.get(key);
-  }
-
-  @PostConstruct
-  public void loadApplicationConfiguration() {
-    Enumeration<URL> urls = findUrls();
-    if (urls.hasMoreElements())
-      loadOnlyOneUrl(urls);
-    else
-      log.warn("{} not found", this);
-  }
-
-  private void loadOnlyOneUrl(Enumeration<URL> urls) {
-    URL url = urls.nextElement();
-    if (urls.hasMoreElements())
-      throw new ThereCanBeOnlyOneApplicationConfigurationException(url, urls.nextElement());
-
-    Properties p = load(url);
-    
-    this.map = new HashMap<String, String>();
-    for (String key : p.stringPropertyNames()) {
-      map.put(key, p.getProperty(key));
-    }
-  }
-
-  protected String getApplicationConfigurationPath() {
+  protected String getConfigurationPath() {
     return "META-INF/sticky/application.properties";
   }
 
-  protected Properties load(URL url) {
-    try {
-      InputStream i = url.openStream();
-      Properties p = new Properties();
-      p.load(i);
-      i.close();
-      return p;
-    }
-    catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private Enumeration<URL> findUrls() {
-    try {
-      return getClassLoader().getResources(getApplicationConfigurationPath());
-    }
-    catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  protected ClassLoader getClassLoader() {
-    return getClass().getClassLoader();
-  }
-
   @Override
-  public String toString() {
-    return getClass().getSimpleName() + "@" + getApplicationConfigurationPath();
-  }
-
-  @Override
-  public void apply(ConfigurationKey key, ResolvedConfiguration values) {
-    if (map == null)
-      return;
-    
-    String lookup = key.join(".");
-    String value = map.get(lookup);
-    if (value != null)
-      values.add(new ApplicationValue(value));
-    
+  protected ConfigurationValue createValue(String value) {
+    return new ApplicationValue(value);
   }
 
 }

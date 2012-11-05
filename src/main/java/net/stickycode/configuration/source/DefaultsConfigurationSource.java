@@ -12,27 +12,22 @@
  */
 package net.stickycode.configuration.source;
 
-import net.stickycode.configuration.ConfigurationKey;
-import net.stickycode.configuration.ConfigurationSource;
-import net.stickycode.configuration.ResolvedConfiguration;
-import net.stickycode.configuration.value.SystemValue;
+import net.stickycode.configuration.ConfigurationValue;
+import net.stickycode.configuration.value.DefaultValue;
 import net.stickycode.stereotype.StickyPlugin;
 
 @StickyPlugin
-public class SystemPropertiesConfigurationSource
-    implements ConfigurationSource {
+public class DefaultsConfigurationSource
+    extends AbstractClasspathConfigurationSource {
 
   @Override
-  public String toString() {
-    return getClass().getSimpleName();
+  protected String getConfigurationPath() {
+    return "META-INF/sticky/defaults.properties";
   }
 
   @Override
-  public void apply(ConfigurationKey key, ResolvedConfiguration values) {
-    String k = key.join(".");
-    String value = System.getProperty(k);
-    if (value != null)
-      values.add(new SystemValue(value));
+  protected ConfigurationValue createValue(String value) {
+    return new DefaultValue(value);
   }
 
 }
