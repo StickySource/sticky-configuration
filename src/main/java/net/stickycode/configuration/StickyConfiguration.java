@@ -55,7 +55,8 @@ public class StickyConfiguration
 
     applySources(key, values);
 
-    log.debug("value not found for key '{}'", key);
+    if (values.isEmpty())
+      log.debug("value not found for key '{}'", key);
 
     return values;
   }
