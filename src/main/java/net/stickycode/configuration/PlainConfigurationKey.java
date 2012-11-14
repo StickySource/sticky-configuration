@@ -1,6 +1,8 @@
 package net.stickycode.configuration;
 
-
+/**
+ * A key that has no components
+ */
 public class PlainConfigurationKey
     implements ConfigurationKey {
 

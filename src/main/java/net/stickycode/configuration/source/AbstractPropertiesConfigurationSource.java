@@ -30,14 +30,13 @@ public abstract class AbstractPropertiesConfigurationSource
   protected abstract ConfigurationValue createValue(String value);
 
   /**
-   * Paths to the properties files
-   */
-  protected abstract String getConfigurationPath();
-
-  /**
    * The sanitised configurations.
    */
-  private Map<String, String> map;
+  private Map<String, String> map = new HashMap<String, String>();
+
+  int size() {
+    return map.size();
+  }
 
   protected boolean hasValue(String key) {
     return map.containsKey(key);
@@ -49,8 +48,6 @@ public abstract class AbstractPropertiesConfigurationSource
 
   protected void loadUrl(URL url) {
     Properties p = load(url);
-
-    this.map = new HashMap<String, String>();
     for (String key : p.stringPropertyNames()) {
       String property = p.getProperty(key);
       String previous = map.put(key, property);
@@ -64,10 +61,10 @@ public abstract class AbstractPropertiesConfigurationSource
    * files.
    */
   protected void propertyReplacedDuringLoad(URL url, String key, String property, String previous) {
-    log.warn("Replaced {} value {} with {} when loading {}", new Object[] { key, property, previous, url });
+    log.warn("Override '{}={}', was '{}' before loading {}", new Object[] { key, property, previous, url });
   }
 
-  protected Properties load(URL url) {
+  private Properties load(URL url) {
     try {
       InputStream i = url.openStream();
       try {
@@ -82,11 +79,6 @@ public abstract class AbstractPropertiesConfigurationSource
     catch (IOException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  @Override
-  public String toString() {
-    return getClass().getSimpleName() + "@" + getConfigurationPath();
   }
 
   @Override

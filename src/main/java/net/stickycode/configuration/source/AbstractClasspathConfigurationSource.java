@@ -49,7 +49,6 @@ public abstract class AbstractClasspathConfigurationSource
     loadUrl(url);
   }
 
-  @Override
   abstract protected String getConfigurationPath();
 
   protected Enumeration<URL> findUrls() {
