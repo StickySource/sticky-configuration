@@ -1,5 +1,7 @@
 package net.stickycode.configuration;
 
+import java.util.List;
+
 public class EnvironmentConfigurationKey
     implements ConfigurationKey {
 
@@ -13,7 +15,7 @@ public class EnvironmentConfigurationKey
   }
 
   @Override
-  public String join(String separator) {
+  public List<String> join(String separator) {
     return environmentPrefix + separator + key.join(separator);
   }
 
