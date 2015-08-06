@@ -1,5 +1,8 @@
 package net.stickycode.configuration;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * A key that has no components
  */
@@ -13,8 +16,8 @@ public class PlainConfigurationKey
   }
 
   @Override
-  public String join(String string) {
-    return key;
+  public List<String> join(String string) {
+    return Collections.singletonList(key);
   }
 
 }

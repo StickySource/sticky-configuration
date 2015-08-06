@@ -29,10 +29,11 @@ public class SystemPropertiesConfigurationSource
 
   @Override
   public void apply(ConfigurationKey key, ResolvedConfiguration values) {
-    String k = key.join(".");
-    String value = System.getProperty(k);
-    if (value != null)
-      values.add(new SystemValue(value));
+    for (String k : key.join(".")) {
+      String value = System.getProperty(k);
+      if (value != null)
+        values.add(new SystemValue(value));
+    }
   }
 
 }

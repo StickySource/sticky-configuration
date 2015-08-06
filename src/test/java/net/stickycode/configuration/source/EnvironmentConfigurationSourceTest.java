@@ -12,7 +12,7 @@
  */
 package net.stickycode.configuration.source;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import net.stickycode.configuration.CompoundConfigurationKey;
 import net.stickycode.configuration.ConfigurationKey;

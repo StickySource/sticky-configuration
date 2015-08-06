@@ -1,6 +1,6 @@
 package net.stickycode.configuration.placeholder;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class PlaceholderTest {
     assertThat(value.lastIndexOf("${", 8)).isEqualTo(3);
     assertThat(new FoundPlaceholder(value, 3, 8).getKey()).isEqualTo("key");
   }
-  
+
   @Test
   public void foundPlaceHolderKey2() {
     String value = "abc${keykey}hij";
@@ -21,12 +21,12 @@ public class PlaceholderTest {
     assertThat(value.lastIndexOf("${", 11)).isEqualTo(3);
     assertThat(new FoundPlaceholder(value, 3, 11).getKey()).isEqualTo("keykey");
   }
-  
+
   @Test
   public void foundPlaceHolderFound() {
     assertThat(new FoundPlaceholder("abc${key}hij", 4, 9).notFound()).isFalse();
   }
-  
+
   @Test
   public void foundPlaceHolderReplace() {
     assertThat(new FoundPlaceholder("abc${key}hij", 3, 8).replace("def")).isEqualTo("abcdefhij");

@@ -1,6 +1,6 @@
 package net.stickycode.configuration.placeholder;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import net.stickycode.configuration.LookupValues;
 import net.stickycode.configuration.PlainConfigurationKey;

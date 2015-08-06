@@ -29,18 +29,15 @@ public class EnvironmentConfigurationSource
 
   @Override
   public void apply(ConfigurationKey key, ResolvedConfiguration values) {
-    String environmentKey = deriveKey(key);
-    String value = lookupValue(environmentKey);
-    if (value != null)
-      values.add(new EnvironmentValue(value));
+    for (String lookupKey : key.join("_")) {
+      String value = lookupValue(lookupKey.toUpperCase());
+      if (value != null)
+        values.add(new EnvironmentValue(value));
+    }
   }
 
   protected String lookupValue(String environmentKey) {
     return System.getenv(environmentKey);
-  }
-
-  protected String deriveKey(ConfigurationKey key) {
-    return key.join("_").toUpperCase();
   }
 
 }

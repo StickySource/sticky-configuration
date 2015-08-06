@@ -19,8 +19,7 @@ import org.slf4j.LoggerFactory;
  * A source of configuration from properties.
  */
 public abstract class AbstractPropertiesConfigurationSource
-    implements ConfigurationSource
-{
+    implements ConfigurationSource {
 
   private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -86,10 +85,11 @@ public abstract class AbstractPropertiesConfigurationSource
     if (map == null)
       return;
 
-    String lookup = key.join(".");
-    String value = map.get(lookup);
-    if (value != null)
-      values.add(createValue(value));
+    for (String lookup : key.join(".")) {
+      String value = map.get(lookup);
+      if (value != null)
+        values.add(createValue(value));
+    }
 
   }
 
