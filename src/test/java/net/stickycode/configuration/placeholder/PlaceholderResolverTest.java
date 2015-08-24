@@ -1,28 +1,33 @@
 package net.stickycode.configuration.placeholder;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
 import net.stickycode.configuration.LookupValues;
 import net.stickycode.configuration.PlainConfigurationKey;
 import net.stickycode.configuration.value.ApplicationValue;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
 public class PlaceholderResolverTest {
 
-  @Mock
+  @Mocked
   ConfigurationLookup manifest;
 
   @Before
-  public void before() {
+  public void expectKeys() {
     LookupValues values = new LookupValues();
     values.add(new ApplicationValue("value"));
-    when(manifest.lookupValue("key")).thenReturn(values);
+    new NonStrictExpectations() {
+      {
+        manifest.lookupValue("key");
+        result = values;
+        maxTimes = -1;
+      }
+    };
   }
 
   @Test
@@ -62,13 +67,26 @@ public class PlaceholderResolverTest {
 
   @Test(expected = UnresolvedPlaceholderException.class)
   public void noValueForPlaceholder() {
+    new Expectations() {
+      {
+        manifest.lookupValue("XXX");
+        result = new LookupValues();
+      }
+    };
     resolve("${XXX}");
   }
 
   @Test
   public void nestedPlaceholders() {
-    when(manifest.lookupValue("nested")).thenReturn(new LookupValues().with(new ApplicationValue("key")));
-    when(manifest.lookupValue("keykey")).thenReturn(new LookupValues().with(new ApplicationValue("value")));
+    new Expectations() {
+      {
+        manifest.lookupValue("nested");
+        result = new LookupValues().with(new ApplicationValue("key"));
+
+        manifest.lookupValue("keykey");
+        result = new LookupValues().with(new ApplicationValue("value"));
+      }
+    };
 
     assertThat(resolve("${${nested}}")).isEqualTo("value");
     assertThat(resolve("${${nested}${nested}}")).isEqualTo("value");
@@ -76,26 +94,48 @@ public class PlaceholderResolverTest {
 
   @Test(expected = KeyAlreadySeenDuringPlaceholderResolutionException.class)
   public void nestedPlaceholdersWithCycle() {
-    when(manifest.lookupValue("loop")).thenReturn(new LookupValues().with(new ApplicationValue("${loop}")));
+    new Expectations() {
+      {
+        manifest.lookupValue("loop");
+        result = new LookupValues().with(new ApplicationValue("${loop}"));
+      }
+    };
     resolve("${${loop}}");
   }
 
   @Test(expected = KeyAlreadySeenDuringPlaceholderResolutionException.class)
   public void nestedPlaceholdersWithDeepCycle() {
-    when(manifest.lookupValue("loop")).thenReturn(new LookupValues().with(new ApplicationValue("${loop}")));
-    when(manifest.lookupValue("deeploop")).thenReturn(new LookupValues().with(new ApplicationValue("${loop}")));
+    new Expectations() {
+      {
+        manifest.lookupValue("loop");
+        result = new LookupValues().with(new ApplicationValue("${loop}"));
+        manifest.lookupValue("deeploop");
+        result = new LookupValues().with(new ApplicationValue("${loop}"));
+      }
+    };
     resolve("${deeploop}");
   }
 
   @Test(expected = KeyAlreadySeenDuringPlaceholderResolutionException.class, timeout = 100)
   public void nestedPlaceholdersWithOffsetLoop() {
-    when(manifest.lookupValue("offsetloop")).thenReturn(new LookupValues().with(new ApplicationValue(" ${offsetloop}")));
+    new Expectations() {
+      {
+        manifest.lookupValue("offsetloop");
+        result = new LookupValues().with(new ApplicationValue(" ${offsetloop}"));
+      }
+    };
     resolve("${offsetloop}");
   }
 
   @Test
   public void nestedPlaceholdersWithCycle2() {
-    when(manifest.lookupValue("cycle")).thenReturn(new LookupValues().with(new ApplicationValue("cycle")));
+    new Expectations() {
+      {
+        manifest.lookupValue("cycle");
+        result = new LookupValues().with(new ApplicationValue("cycle"));
+        maxTimes = -1;
+      }
+    };
     assertThat(resolve("${cycle}")).isEqualTo("cycle");
     assertThat(resolve("${${cycle}}")).isEqualTo("cycle");
   }

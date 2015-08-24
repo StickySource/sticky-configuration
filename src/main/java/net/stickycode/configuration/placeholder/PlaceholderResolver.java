@@ -24,7 +24,7 @@ public class PlaceholderResolver {
       return resolution.withValue(seed.getValue());
 
     LookupValues lookup = manifest.lookupValue(placeholder.getKey());
-    if (lookup == null)
+    if (lookup.isEmpty())
       throw new UnresolvedPlaceholderException(seed, placeholder);
 
     ArrayDeque<Placeholder> seen = new ArrayDeque<Placeholder>();

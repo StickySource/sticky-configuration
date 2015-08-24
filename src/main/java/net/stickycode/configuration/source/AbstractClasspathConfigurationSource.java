@@ -27,8 +27,7 @@ import org.slf4j.LoggerFactory;
  * Configuration source for properties files on the classpath
  */
 public abstract class AbstractClasspathConfigurationSource
-    extends AbstractPropertiesConfigurationSource
-{
+    extends AbstractPropertiesConfigurationSource {
 
   private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -64,4 +63,8 @@ public abstract class AbstractClasspathConfigurationSource
     return getClass().getClassLoader();
   }
 
+  @Override
+  public String toString() {
+    return getClass().getSimpleName();
+  }
 }

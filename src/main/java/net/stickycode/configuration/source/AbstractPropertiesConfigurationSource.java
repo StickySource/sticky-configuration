@@ -93,4 +93,8 @@ public abstract class AbstractPropertiesConfigurationSource
 
   }
 
+  @Override
+  public String toString() {
+    return getClass().getSimpleName();
+  }
 }
