@@ -5,13 +5,13 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.stickycode.configuration.placeholder.ConfigurationLookup;
 import net.stickycode.configuration.placeholder.PlaceholderResolver;
 import net.stickycode.configuration.placeholder.ResolvedValue;
 import net.stickycode.stereotype.StickyComponent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @StickyComponent
 public class StickyConfiguration
@@ -30,8 +30,11 @@ public class StickyConfiguration
       log.info("Using environment {} when resolving configuration", environment);
     else
       log.debug("No environment is specified for resolving configuration");
+
+    log.info("configuration sources {}", sources);
   }
 
+  @Override
   public void resolve(ConfigurationTarget configuration) {
     PlaceholderResolver resolver = new PlaceholderResolver(this);
     LookupValues seed = lookupValue(configuration);
@@ -74,6 +77,7 @@ public class StickyConfiguration
     return sources.toString();
   }
 
+  @Override
   public LookupValues lookupValue(String key) {
     return lookupValue(new PlainConfigurationKey(key));
   }
