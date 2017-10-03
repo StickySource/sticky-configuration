@@ -2,6 +2,7 @@ package net.stickycode.configuration;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EnvironmentConfigurationKey
     implements ConfigurationKey {
@@ -17,7 +18,9 @@ public class EnvironmentConfigurationKey
 
   @Override
   public List<String> join(String separator) {
-    return Collections.singletonList(environmentPrefix + separator + key.join(separator));
+    return key.join(separator).stream()
+      .map(x -> environmentPrefix + separator + x)
+      .collect(Collectors.toList());
   }
 
 }
